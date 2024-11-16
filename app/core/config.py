@@ -1,6 +1,7 @@
 from typing import Literal
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file="../.env",
@@ -11,5 +12,8 @@ class Settings(BaseSettings):
 
     PROJECT_NAME: str
     OPENAI_API_KEY: str
+    BASIC_AUTH_USERNAME: str
+    BASIC_AUTH_PASSWORD: str
+
 
 settings = Settings()
