@@ -14,6 +14,9 @@ class Settings(BaseSettings):
     OPENAI_API_KEY: str
     BASIC_AUTH_USERNAME: str
     BASIC_AUTH_PASSWORD: str
+    REDIS_HOST: str = "localhost"
+    REDIS_PORT: int = 6379
+    REDIS_DB: int = 0
 
 
 settings = Settings()
