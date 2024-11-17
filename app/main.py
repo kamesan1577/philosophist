@@ -1,6 +1,8 @@
+from mimetypes import init
 from fastapi import APIRouter, FastAPI
 from fastapi.responses import JSONResponse
 
+from app.core.cors import init_cors
 from app.routes.main import api_router
 from app.core.config import settings
 from app.core.exceptions import APIException
@@ -8,6 +10,9 @@ from app.core.exceptions import APIException
 app = FastAPI(
     title=settings.PROJECT_NAME,
 )
+
+init_cors(app)
+
 root_router = APIRouter()
 
 

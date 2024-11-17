@@ -1,4 +1,4 @@
-from typing import Literal, Optional
+from typing import List, Literal, Optional
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -21,6 +21,21 @@ class Settings(BaseSettings):
     REDIS_PASSWORD: str = ""
     REDIS_URL: Optional[str] = None
     REDIS_TOKEN: Optional[str] = None
+
+    CORS_ORIGINS: List[str] = ["*"]
+    CORS_ALLOW_CREDENTIALS: bool = True
+    CORS_ALLOW_METHODS: List[str] = ["*"]
+    CORS_ALLOW_HEADERS: List[str] = ["*"]
+    CORS_ALLOW_METHODS: List[str] = ["*"]
+
+    @property
+    def cors_origins(self) -> List[str]:
+        """
+        開発環境と本番環境で異なるCORS設定を返す
+        """
+        if self.ENVIRONMENT == "development":
+            return ["*"]
+        return self.CORS_ORIGINS
 
 
 settings = Settings()
