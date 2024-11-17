@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import APIRouter, FastAPI
 from fastapi.responses import JSONResponse
 
 from app.routes.main import api_router
@@ -8,6 +8,12 @@ from app.core.exceptions import APIException
 app = FastAPI(
     title=settings.PROJECT_NAME,
 )
+root_router = APIRouter()
+
+
+@root_router.get("/")
+async def root():
+    return {"message": "Hi, there!"}
 
 
 @app.exception_handler(APIException)
@@ -18,4 +24,5 @@ async def handle_api_exception(request, exc: APIException):
     )
 
 
+app.include_router(root_router)
 app.include_router(api_router, prefix=settings.API_V1_STR)
