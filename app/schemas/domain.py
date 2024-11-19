@@ -40,7 +40,7 @@ class FallacyType(str, Enum):
         "future_prediction"  # 不確実な未来予測を確実なものとして扱う論法
     )
     SUBJECTIVE_ASSUMPTION = (
-        "subjective_assumption"  # 主観的な判断を客観的事実として扱う論法
+        "subjective_assumption"  # 主��的な判断を客観的事実として扱う論法
     )
     UNSUPPORTED_CONSENSUS = (
         "unsupported_consensus"  # 根拠のない一般的な認識を真実として扱う論法
@@ -108,7 +108,7 @@ class TextSpan(BaseModel):
 class FallacyTypeDetail(BaseModel):
     type: FallacyType = Field(..., description="詭弁の種類")
     confidence: float = Field(..., description="この詭弁タイプの確信度(0~1)")
-    explanation: str = Field(..., description="なぜこの詭弁に該当するかの説明")
+    explanation: str = Field(..., description="なぜその詭弁に該当するかの説明")
     relevant_text: str = Field(..., description="入力文字列中の該当箇所")
     text_span: TextSpan
 
@@ -142,6 +142,62 @@ class FallacyAnalysisWithMetadata(BaseModel):
     fallacy_types: List[FallacyTypeDetail] = Field(default_factory=list)
     timestamp: datetime = Field(default_factory=datetime.now)
     llm_version: str = Field(..., description="使用したLLMのバージョン")
+
+    class Config:
+        arbitrary_types_allowed = True
+
+
+class FallacyDefinitions(BaseModel):
+    definitions: dict = Field(
+        default_factory=lambda: {
+            "ad_hominem": "相手の人格や性質を攻撃することで議論を否定する論法",
+            "straw_man": "相手の主張を歪曲して解釈し、それを批判する論法",
+            "false_dichotomy": "複数ある選択肢を二つに限定して議論する論法",
+            "slippery_slope": "ある行為が連鎖的に悪い結果を招くと主張する論法",
+            "appeal_to_authority": "権威ある人や組織の意見を無批判に受け入れる論法",
+            "hasty_generalization": "少数の事例から性急に一般化する論法",
+            "circular_reasoning": "結論を前提として使用する循環論法",
+            "appeal_to_emotion": "感情に訴えかけることで論理的思考を妨げる論法",
+            "red_herring": "議論の本質から外れた話題を持ち出して論点をずらす論法",
+            "bandwagon": "多数派の意見だからという理由で正当化する論法",
+            "false_cause": "因果関係のない事象を因果関係があるように結びつける論法",
+            "appeal_to_tradition": "伝統的だからという理由で正当化する論法",
+            "tu_quoque": "「お前もやっている」と相手の非を指摘して自分の非を正当化する論法",
+            "no_true_scotsman": "反例を「本物ではない」と否定する論法",
+            "hypothetical_fallacy": "仮定に基づいて現実を否定する論法",
+            "rare_exception": "まれな例外を一般的な反例として扱う論法",
+            "future_prediction": "不確実な未来予測を確実なものとして扱う論法",
+            "subjective_assumption": "主観的な判断を客観的事実として扱う論法",
+            "unsupported_consensus": "根拠のない一般的な認識を真実として扱う論法",
+            "conspiracy_theory": "陰謀があることを前提として事象を説明する論法",
+            "personal_attack": "個人を攻撃することで議論を否定する論法",
+            "impossible_solution": "実現不可能な解決策を提示して議論を封じる論法",
+            "labeling": "レッテル貼りによって相手を否定する論法",
+            "ignoring_settlement": "既に決着がついた事項を無視して議論を蒸し返す論法",
+            "false_victory": "勝利宣言によって議論を終わらせようとする論法",
+            "nitpicking": "些細な誤りを指摘して全体を否定する論法",
+            "progress_fallacy": "進歩や発展を理由に正当化する論法",
+            "black_and_white": "事象を極端な二項対立で捉える論法",
+            "extreme_extrapolation": "極端な例を用いて一般化する論法",
+            "topic_diversion": "話題をずらして本質的な議論を避ける論法",
+            "authority_dismissal": "権威を否定することで議論を退ける論法",
+            "argument_from_ignorance": "証明できないことを根拠に結論を導く論法",
+            "composition_fallacy": "部分の性質を全体の性質として一般化する論法",
+            "division_fallacy": "全体の性質を部分の性質として適用する論法",
+            "loaded_language": "感情的な反応を引き出す言葉を使用して説得を試みる論法",
+            "complex_question": "複数の前提を含む質問で相手を困らせる論法",
+            "appeal_to_force": "力や脅威を用いて相手を説得しようとする論法",
+            "continuum_fallacy": "境界が曖昧な概念を利用して論理を歪める論法",
+            "god_of_gaps": "科学で説明できない現象を神の仕業とする論法",
+            "naturalistic_fallacy": "自然なことを善いことと同一視する論法",
+            "moralistic_fallacy": "道徳的な「べき」から事実を否定する論法",
+            "appeal_to_pity": "同情を引くことで論理的な議論を回避する論法",
+            "appeal_to_novelty": "新しいことを理由に正当化する論法",
+            "guilt_by_association": "関連する人や集団の否定的側面を理由に議論を否定する論法",
+            "circumstantial_ad_hominem": "相手の置かれた状況を理由に議論を否定する論法",
+            "is_ought_fallacy": "事実から当為を導き出そうとする論法（ヒュームの法則）",
+        }
+    )
 
     class Config:
         arbitrary_types_allowed = True

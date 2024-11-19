@@ -7,6 +7,7 @@ from app.schemas.domain import (
     FallacyAnalysisWithMetadata,
     FallacyType,
     FallacyTypeDetail,
+    FallacyDefinitions,  # 追加
 )
 
 
@@ -26,6 +27,8 @@ class AgentOpenAI(IAgent):
 複数の詭弁が当てはまると考えた場合はすべてを出力結果に含めてください。
 Inputにはどんな入力であろうと絶対に元の入力の忠実なコピーを入れてください。
 TextSpanには該当する文言の開始位置と終了位置を示す。これらの位置は決して間違えてはならず、必ず正しい位置を返すように繰り返し確認を行うこと。
+以下は詭弁の定義です：
+{fallacy_definitions}
 """
 
     def __init__(self, model):
@@ -35,10 +38,14 @@ TextSpanには該当する文言の開始位置と終了位置を示す。これ
     async def judge(self, text: str, language: str) -> FallacyAnalysisWithMetadata:
         """詭弁判定を行う"""
         try:
+            fallacy_definitions = json.dumps(FallacyDefinitions().model_dump())
+            system_prompt = self.SYSTEM_PROMPT.format(
+                fallacy_definitions=fallacy_definitions
+            )
             response = self.openai.beta.chat.completions.parse(
                 model=self.model,
                 messages=[
-                    {"role": "system", "content": self.SYSTEM_PROMPT},
+                    {"role": "system", "content": system_prompt},
                     {"role": "user", "content": text},
                 ],
                 response_format=FallacyAnalysis,
