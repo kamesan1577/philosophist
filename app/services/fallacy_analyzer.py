@@ -14,7 +14,7 @@ from datetime import datetime
 class FallacyAnalyzer:
     def __init__(
         self,
-        model: str = "gpt-4o-mini",
+        model: str = "gpt-4o",
     ):
         self.agent = AgentOpenAI(model)
         self.redis_client = RedisClient()
