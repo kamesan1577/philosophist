@@ -16,7 +16,9 @@ fallacy_analyzer = FallacyAnalyzer()
 )
 async def judge_fallacy(request: JudgeRequest):
     """
-    入力された文字列が詭弁かどうかを判定し、分析結果を返す
+    入力された文字列が詭弁かどうかを判定し、分析結果を返す。
+    複数の詭弁が当てはまると考えた場合はすべてを出力結果に含める。
+    TextSpanには該当する文言の開始位置と終了位置を示す。これらの位置は決して間違えてはならず、必ず正しい位置を返すように繰り返し確認を行うこと
     """
     # TODO エラーハンドリング
     analysis_result = await fallacy_analyzer.judge(
