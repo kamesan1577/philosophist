@@ -24,6 +24,24 @@ class FallacyType(str, Enum):
     TU_QUOQUE = "tu_quoque"
     NO_TRUE_SCOTSMAN = "no_true_scotsman"
 
+    HYPOTHETICAL_FALLACY = "hypothetical_fallacy"  # 仮定による詭弁
+    RARE_EXCEPTION = "rare_exception"  # 例外による詭弁
+    FUTURE_PREDICTION = "future_prediction"  # 未来予測による詭弁
+    SUBJECTIVE_ASSUMPTION = "subjective_assumption"  # 主観的決めつけ
+    UNSUPPORTED_CONSENSUS = "unsupported_consensus"  # 根拠なき一般論
+    CONSPIRACY_THEORY = "conspiracy_theory"  # 陰謀論
+    PERSONAL_ATTACK = "personal_attack"  # 人格攻撃
+    IMPOSSIBLE_SOLUTION = "impossible_solution"  # 実現不可能な解決策
+    LABELING = "labeling"  # レッテル貼り
+    IGNORING_SETTLEMENT = "ignoring_settlement"  # 既決事項の無視
+    FALSE_VICTORY = "false_victory"  # 虚偽の勝利宣言
+    NITPICKING = "nitpicking"  # 細部の誤りの指摘
+    PROGRESS_FALLACY = "progress_fallacy"  # 進歩による正当化
+    BLACK_AND_WHITE = "black_and_white"  # 二者択一的思考
+    EXTREME_EXTRAPOLATION = "extreme_extrapolation"  # 極論化
+    TOPIC_DIVERSION = "topic_diversion"  # 話題のすり替え
+    AUTHORITY_DISMISSAL = "authority_dismissal"  # 権威による否定
+
 
 class TextSpan(BaseModel):
     start: int = Field(..., description="該当テキストの開始位置")
